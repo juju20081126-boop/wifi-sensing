@@ -1,4 +1,4 @@
-# To-do list and materials guide
+# To-do list — ESP32-WROOM-32 DevKit (CH9102X, one board)
 
 A single checklist for the whole project, stage by stage. Each stage lists
 exactly what you need before you start it and exactly what to do. Check boxes
@@ -13,6 +13,12 @@ as you go — this file is meant to be edited, not just read.
 This file is the short version of all three. When a step needs more detail than
 fits here, it links to the document that has it.
 
+> **Fixed scope:** Every checkbox in this file is for the one board already
+> purchased: an original ESP32-WROOM-32 DevKit with a CH9102X USB-to-serial
+> bridge and Micro-USB connector. CH9102X creates the COM port; it is not the
+> sensing processor. Do not substitute an ESP32-C6/S3 or add a second board to
+> this checklist.
+
 ---
 
 ## Master materials list
@@ -21,17 +27,16 @@ Buy or gather these before Stage 1. Nothing below Stage 4 is needed yet.
 
 | Item | Needed for | Cost | Have it? |
 |---|---|---|---|
-| ESP32 WROOM-32 board | Everything | Bought (NT$265) | [x] |
+| ESP32-WROOM-32 DevKit with CH9102X bridge | Everything | Bought (NT$265) | [x] |
 | Micro-USB **data** cable (not charge-only) | Flashing | Check what you have first | [ ] |
 | 2.4 GHz WiFi network | Provisioning the board | Existing router | [ ] |
 | A Windows PC with Chrome | Flashing, everything | This machine | [x] |
 | A machine that can stay powered on | Home Assistant | This machine or a Pi | [ ] |
 | Docker Desktop | Home Assistant | Installed, daemon needs starting | [ ] |
 | Python 3.12 | The research track | Installed via `uv` | [x] |
-| A second ESP32 (prefer C6) | Two-person work, Layout B | ~$10, buy when ready | [ ] |
 
-Bold rule: **do not buy the second board yet.** Finish Stage 3 first, so you
-know the first board actually works before doubling down.
+This is intentionally a **one-board materials list**. Additional boards are a
+separate future scope decision, not a later checkbox in this plan.
 
 ---
 
@@ -43,9 +48,9 @@ know the first board actually works before doubling down.
 
 - [ ] Plug the board in
 - [ ] Run `Get-PnpDevice -Class Ports -Status OK` in PowerShell
-- [ ] A `COM*` port mentioning CH9102 or USB-SERIAL must appear
+- [ ] A `COM*` port mentioning CH9102X or USB-SERIAL must appear
 - [ ] If nothing appears: try a different cable first, then install the
-      CH9102/CH343 driver from WCH
+      CH9102X driver from WCH
 
 **Stop here if it fails.** Nothing else works without this. Full detail:
 [BUILD-GUIDE.md Step 1](BUILD-GUIDE.md#step-1--prove-the-board-enumerates).
@@ -224,4 +229,5 @@ and 7–8 are Person B's (software, evaluation, the PR). The only stage that
 blocks the other person is Stage 6 → Stage 7 — everything else can run in
 parallel.
 
-Buy the second board once Stage 3 is confirmed working, not before.
+Both people share the same WROOM-32. Schedule hardware sessions rather than
+adding a second board to this plan.

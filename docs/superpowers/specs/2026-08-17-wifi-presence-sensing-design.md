@@ -1,4 +1,10 @@
-# WiFi CSI presence sensing — design & plan
+# WiFi CSI presence sensing — superseded original design
+
+> **Historical file — do not use as the active build plan.** This first draft
+> assumed an ESP32-C6 before the purchased board was identified. The active,
+> hardware-locked plan is [docs/PLAN.md](../../PLAN.md) for one
+> **ESP32-WROOM-32 DevKit with CH9102X USB bridge**. This file is preserved only
+> as research history.
 
 **Date:** 2026-08-17
 **Owner:** Justin

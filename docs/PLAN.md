@@ -1,4 +1,4 @@
-# Project plan
+# Project plan — ESP32-WROOM-32 DevKit (CH9102X, one board)
 
 Detailed, gated plan for the WiFi CSI stationary-presence sensor. Read
 [METHODOLOGY.md](METHODOLOGY.md) alongside this document: that file explains
@@ -7,6 +7,27 @@ this file is the *schedule* those habits produce.
 
 Last updated 2026-08-18. Every "verified" claim below has evidence recorded
 against it; every unverified claim says so.
+
+---
+
+## 0. Fixed hardware scope
+
+This plan applies only to the board already purchased:
+
+| Part | Required value |
+|---|---|
+| Sensing module | Original ESP32-WROOM-32 DevKit |
+| USB-to-serial bridge | CH9102X |
+| USB connector | Micro-USB |
+| WiFi | 2.4 GHz 802.11 b/g/n |
+| Board count | One |
+
+**CH9102X is not the sensing processor.** It is the USB bridge that creates the
+Windows COM port. All sensing code runs on the ESP32-WROOM-32.
+
+No task in this plan requires or authorizes buying an ESP32-C6, ESP32-S3, or a
+second board. Those would be separate future projects after this plan is
+completed and measured.
 
 ---
 
@@ -62,7 +83,7 @@ not an opinion.
 | # | Task | Owner |
 |---|---|---|
 | 0.1 | Connect board, confirm a COM port appears | A |
-| 0.2 | Install CH9102/CH343 driver if absent | A |
+| 0.2 | Install the WCH CH9102X driver if the COM port is absent | A |
 | 0.3 | Start Docker Desktop, install Home Assistant | A |
 | 0.4 | Flash `espectre-2.8.0-esp32-ml.bin` via ESPConnect in Chrome | A |
 | 0.5 | Provision WiFi on the 2.4 GHz SSID | A |
@@ -241,7 +262,7 @@ Non-negotiable, because they are how the last attempt failed.
 | MicroPython 32-bit floats destabilise the biquads | Filter misbehaves on-device | Task 4.2 tests on-device early; fall back to a higher sample rate or fixed-point if needed |
 | Room overfitting | Works in one room only | Gate 3 requires a furniture-moved session; scope claims to the tested room |
 | `present-still` never separates | Premise fails | Gate 2 finds this in week one, not month three |
-| Only one board | Two people take turns | Buy a second (~$10); prefer ESP32-C6 |
+| Only one board | Hardware work cannot run in parallel | Accepted scope: schedule shared-board sessions; do not buy another board for this plan |
 | Dataset collection stalls | Project dies quietly | It is the boring stage; M3 has explicit session counts so progress is visible |
 | Someone else lands breathing detection first | Contribution redundant | Task 5.1, and check again before M4 |
 
@@ -252,7 +273,8 @@ Non-negotiable, because they are how the last attempt failed.
 
 The only hard dependency is **A's dataset → B's evaluation at M4**. B is not
 blocked before then: the detector is already written and can be exercised on
-synthetic and public data.
+synthetic and public data. Both people share the same WROOM-32; this plan does
+not require a second board.
 
 ## 7. Explicit non-goals
 
@@ -260,6 +282,7 @@ Stated so scope cannot creep in quietly:
 
 - people counting (interesting, but ~4–5 per link is the physical ceiling)
 - pose estimation (needs research-grade MIMO; ~3% accuracy on ESP32)
+- second-board layouts, ESP32-C6/S3 upgrades, or multistatic meshes
 - heart rate (harder than breathing, and unnecessary here)
 - multi-room or whole-home coverage
 - anything safety-critical or medical
@@ -278,3 +301,4 @@ Stated so scope cannot creep in quietly:
 | 2026-08-18 | Repository stays private for now | Prototype unvalidated on real CSI |
 | 2026-08-18 | Reviewed WaveSight for device-integration patterns, wrote `PresenceTracker` from scratch | WaveSight's own "someone" output is a motion-hold timeout, not stationary detection — confirms this project's gap is still open; no source copied since WaveSight's application code has no license file |
 | 2026-08-18 | Fusion uses K-of-N evidence plus hysteresis, not a single-sample OR | A single strong breathing sample is weak evidence; requiring repeated votes with separate on/off thresholds avoids flicker |
+| 2026-08-18 | First plan is locked to one ESP32-WROOM-32 DevKit with CH9102X | This is the hardware already owned. C6/S3 boards, meshes, and pose work would create a different project and are explicitly deferred. |

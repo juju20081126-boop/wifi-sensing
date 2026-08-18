@@ -11,6 +11,23 @@ The project grew from reviewing [RuView](https://github.com/ruvnet/RuView),
 estimation or people counting: it is preventing automatic lights from turning
 off while someone is present but stationary.
 
+## Active hardware scope — first plan
+
+This repository's active plan is for **one specific board only**:
+
+| Part | Exact scope |
+|---|---|
+| Sensing module | Original ESP32-WROOM-32 DevKit |
+| USB bridge | CH9102X |
+| Connector | Micro-USB |
+| WiFi | 2.4 GHz 802.11 b/g/n |
+| Quantity | One board |
+
+CH9102X is the USB-to-serial bridge used for flashing and serial communication;
+the ESP32-WROOM-32 is the module that performs WiFi CSI sensing. ESP32-C6,
+ESP32-S3, second-board layouts, meshes, and pose estimation are not part of this
+first plan.
+
 ## Current status
 
 The signal-processing prototype is implemented in pure Python so it can be

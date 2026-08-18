@@ -1,8 +1,13 @@
-# Build Guide — ESP32 WROOM-32
+# Build Guide — ESP32-WROOM-32 DevKit with CH9102X
 
 Step-by-step execution of the work plan. Written for **Windows**, since that is
 what this machine runs. Every command comes from the upstream projects' own
 documentation, not from memory.
+
+**Hardware scope:** one original ESP32-WROOM-32 DevKit with a CH9102X
+USB-to-serial bridge and Micro-USB connector. CH9102X handles flashing/serial;
+the WROOM-32 performs the sensing. Do not follow this guide for ESP32-C6,
+ESP32-S3, or a multi-board setup.
 
 Plan and rationale: `Obsidian Vault/📁 Projects/WiFi Sensing/ESP32 WROOM-32 Work Plan`
 
@@ -12,7 +17,7 @@ Plan and rationale: `Obsidian Vault/📁 Projects/WiFi Sensing/ESP32 WROOM-32 Wo
 
 | Need | Check |
 |---|---|
-| ESP32 WROOM-32 board | Bought |
+| ESP32-WROOM-32 DevKit with CH9102X bridge | Bought |
 | Micro-USB **data** cable | Charge-only cables are the number one first-hour failure |
 | 2.4 GHz WiFi SSID | This chip cannot see 5 GHz networks |
 | Google Chrome | Required for Web Serial flashing |
@@ -32,12 +37,12 @@ Plug the board in via USB, then in PowerShell:
 Get-PnpDevice -Class Ports -Status OK | Select-Object Name, InstanceId
 ```
 
-**Expected:** a `COM*` entry mentioning CH9102 or USB-SERIAL.
+**Expected:** a `COM*` entry mentioning CH9102X or USB-SERIAL.
 
 **If nothing appears:**
 
 1. Try a different cable. Most micro-USB cables are charge-only.
-2. Install the CH9102 / CH343 driver from WCH, then re-plug.
+2. Install the CH9102X driver from WCH, then re-plug.
 
 Do not continue until a COM port appears. Everything downstream depends on it.
 
@@ -295,7 +300,7 @@ Fuse as an **OR at the state level**: motion catches someone walking in, breathi
 | Symptom | Cause | Fix |
 |---|---|---|
 | No COM port | Charge-only cable | Try another cable first |
-| No COM port, cable is fine | Missing driver | Install CH9102 / CH343 from WCH |
+| No COM port, cable is fine | Missing driver | Install the CH9102X driver from WCH |
 | ESPConnect will not connect | Wrong browser | Chrome only, needs Web Serial API |
 | Flash starts then fails | Boot mode | Hold BOOT during flash |
 | Flashed but never joins WiFi | 5 GHz SSID | This chip is 2.4 GHz only |
