@@ -1,0 +1,29 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+.venv/
+venv/
+vendor/
+
+# Local hardware configuration and credentials
+config_local.py
+**/config_local.py
+.env
+.env.*
+
+# Private/local recordings and machine state
+data/**
+!data/.gitkeep
+SETUP-STATUS.md
+
+# Downloaded third-party firmware; fetch it from the upstream release page.
+firmware/*.bin
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
