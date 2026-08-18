@@ -99,13 +99,26 @@ immediately and remains held for the configured timeout.
 ## Repository layout
 
 ```text
-src/breathing/   Pure-Python filter, resampler, estimator, and public detector
-src/presence/    Stateful motion/breathing fusion and occupancy hold
-tests/           Synthetic-signal regression tests
-docs/            Design rationale, two-language plans, and Windows build guide
-data/            Local labeled CSI sessions (ignored by Git)
-firmware/        Local upstream firmware downloads (ignored by Git)
+src/breathing/     Pure-Python filter, resampler, estimator, and public detector
+src/presence/      Stateful motion/breathing fusion and occupancy hold
+firmware-radar/    Second, independent implementation: ESP-IDF + Espressif's
+                    esp-radar component, own web dashboard. See its own README.
+tests/             Synthetic-signal regression tests
+docs/              Design rationale, two-language plans, and Windows build guide
+data/              Local labeled CSI sessions (ignored by Git)
+firmware/          Local upstream firmware downloads (ignored by Git)
 ```
+
+**Two parallel tracks, same board, same promise.** `src/breathing/` +
+`src/presence/` process raw CSI in Python via ESPectre/MicroPython.
+`firmware-radar/` uses Espressif's own official `esp-radar` component
+directly in C via ESP-IDF, with a self-hosted dashboard inspired by
+[WaveSight](https://github.com/ErfanDL/WaveSight) but written from scratch —
+see [firmware-radar/README.md](firmware-radar/README.md) for why it exists
+and its own honest verification status. Both target the original
+ESP32-WROOM-32; neither replaces the other yet. Evaluation against
+[docs/PLAN.md](docs/PLAN.md)'s gates decides which one this project
+eventually builds on, or whether both survive.
 
 ## Documentation
 
@@ -118,6 +131,7 @@ firmware/        Local upstream firmware downloads (ignored by Git)
 | [docs/BUILD-GUIDE.md](docs/BUILD-GUIDE.md) | 17 numbered Windows steps from unboxing to first recording |
 | [docs/measurements/](docs/measurements/) | Evidence artifacts produced at each gate |
 | [docs/WAVESIGHT-REVIEW.md](docs/WAVESIGHT-REVIEW.md) | WaveSight comparison, selected design pattern, and licensing boundary |
+| [firmware-radar/README.md](firmware-radar/README.md) | The ESP-IDF/esp-radar track — architecture, the exact gap it fixes, verification status |
 
 ## Hardware path
 

@@ -1,0 +1,10 @@
+# Original ESP32 (WROOM-32), matching the board already bought for this
+# project. See ../docs/PLAN.md and README.md.
+CONFIG_IDF_TARGET="esp32"
+
+# esp-radar requires WiFi CSI enabled; without this, esp_radar_init() fails
+# at runtime. Both symbol names below are confirmed present together in a
+# real generated sdkconfig for a CSI-enabled esp-radar build (WaveSight's
+# checked-in sdkconfig, read directly rather than assumed).
+CONFIG_ESP_WIFI_CSI_ENABLED=y
+CONFIG_ESP32_WIFI_CSI_ENABLED=y

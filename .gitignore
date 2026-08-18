@@ -22,6 +22,14 @@ SETUP-STATUS.md
 # Downloaded third-party firmware; fetch it from the upstream release page.
 firmware/*.bin
 
+# ESP-IDF build output and machine-generated config (regenerate with
+# `idf.py set-target esp32 && idf.py build`; sdkconfig.defaults is committed).
+firmware-radar/build/
+firmware-radar/sdkconfig
+firmware-radar/sdkconfig.old
+firmware-radar/managed_components/
+firmware-radar/dependencies.lock
+
 # Editor and OS files
 .idea/
 .vscode/
