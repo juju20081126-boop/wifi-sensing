@@ -10,3 +10,6 @@ Evidence artifacts produced at each gate in [../PLAN.md](../PLAN.md).
 
 Raw session recordings live in `data/` and are gitignored. Only derived
 summaries, plots, and metrics belong here.
+
+For the intended shape of `M4-evaluation.md` before it exists, see
+[../VISION.md §3](../VISION.md#3-what-the-finished-evaluation-report-contains).

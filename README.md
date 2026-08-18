@@ -94,8 +94,9 @@ firmware/        Local upstream firmware downloads (ignored by Git)
 
 | Document | What it covers |
 |---|---|
+| [docs/VISION.md](docs/VISION.md) | **Read first.** What the finished project looks like — dashboard mockup, evaluation report shape, the eventual PR. All illustrative, none of it measured yet |
 | [docs/TODO.md](docs/TODO.md) | **Checklist.** Every stage, what materials it needs, and what to do — check boxes as you go |
-| [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | **Read second.** How the project works: verification discipline, TDD case studies, evidence standards, licensing rules |
+| [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | **Read third.** How the project works: verification discipline, TDD case studies, evidence standards, licensing rules |
 | [docs/PLAN.md](docs/PLAN.md) | Milestones M0-M5, gate criteria, evidence standards, risks, decision log |
 | [docs/BUILD-GUIDE.md](docs/BUILD-GUIDE.md) | 17 numbered Windows steps from unboxing to first recording |
 | [docs/measurements/](docs/measurements/) | Evidence artifacts produced at each gate |

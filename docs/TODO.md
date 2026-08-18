@@ -4,6 +4,7 @@ A single checklist for the whole project, stage by stage. Each stage lists
 exactly what you need before you start it and exactly what to do. Check boxes
 as you go — this file is meant to be edited, not just read.
 
+- **What the finished project looks like:** [VISION.md](VISION.md)
 - **What to build and why:** [../README.md](../README.md)
 - **How we work:** [METHODOLOGY.md](METHODOLOGY.md)
 - **Gates, evidence, and the full schedule:** [PLAN.md](PLAN.md)
