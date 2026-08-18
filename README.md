@@ -7,9 +7,15 @@ detector for room-light automation.
 
 The project grew from reviewing [RuView](https://github.com/ruvnet/RuView),
 [ESPectre](https://github.com/francescopace/espectre), and
-[WaveSight](https://github.com/ErfanDL/WaveSight). The immediate goal is not pose
+[WaveSight](https://github.com/ErfanDL/WaveSight). The end goal is not pose
 estimation or people counting: it is preventing automatic lights from turning
 off while someone is present but stationary.
+
+**Current priority (2026-08-18): plain movement capture, nothing else.**
+Get the board reliably detecting and recording motion first. The lights
+automation and the stationary-presence/breathing work above are real and
+documented, but deliberately on hold until movement capture itself is
+working end to end — see [docs/TODO.md](docs/TODO.md) Stage 3.
 
 ## Active hardware scope — first plan
 

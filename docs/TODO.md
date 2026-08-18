@@ -75,10 +75,15 @@ Full detail: [BUILD-GUIDE.md Steps 2–3](BUILD-GUIDE.md#step-2--install-home-as
 
 ---
 
-## Stage 3 — Flash and get the lights working
+## Stage 3 — Flash and capture movement (current priority)
 
 **Materials needed:** the firmware `.bin` from Stage 2, Google Chrome
 specifically, your 2.4 GHz WiFi name and password.
+
+**Goal for right now: reliable movement detection only.** The lights
+automation at the bottom of this stage is real and documented but
+**deliberately deferred** — do not do it yet. Get movement capture solid
+first.
 
 **Do:**
 
@@ -94,17 +99,22 @@ specifically, your 2.4 GHz WiFi name and password.
 - [ ] Walk across that line, then parallel to it — the score should jump for
       the first and barely move for the second
 - [ ] Try three positions, keep the best, tune thresholds
-- [ ] Write the automation: motion off 10 minutes → lights off, plus a manual
-      override
+- [ ] Watch the movement-score entity in Home Assistant over a normal hour —
+      confirm it tracks real movement with no obvious false triggers
 
 **Gate — do not skip:** there must be a clear score gap between "walking" and
 "empty room." If there isn't, go back and move the board. No software fixes
 bad placement.
 
-Full detail: [BUILD-GUIDE.md Steps 4–9](BUILD-GUIDE.md#step-4--flash-it).
+Full detail: [BUILD-GUIDE.md Steps 4–8](BUILD-GUIDE.md#step-4--flash-it).
 Evidence to record: [PLAN.md Gate 1](PLAN.md#m1--motion-baseline-and-lights).
 
-**This is where the original goal — automatic lights — is done.**
+**Movement capture is the deliverable here. Stop at this point for now.**
+
+### Deferred — do later, not now
+
+- [ ] Write the automation: motion off 10 minutes → lights off, plus a manual
+      override (Full detail: [BUILD-GUIDE.md Step 9](BUILD-GUIDE.md#step-9--the-automation))
 
 ---
 

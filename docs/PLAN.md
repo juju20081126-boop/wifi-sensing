@@ -98,8 +98,9 @@ hand in front of the board.
 
 ### M1 — Motion baseline and lights
 
-**Goal:** the original goal, working. Also the control condition every later
-claim is measured against.
+**Goal (current priority): reliable movement capture.** This is also the
+control condition every later claim is measured against, regardless of
+whether the lights automation ever gets built.
 
 | # | Task | Owner |
 |---|---|---|
@@ -107,13 +108,15 @@ claim is measured against.
 | 1.2 | Walk perpendicular to the link, then parallel; record both score ranges | A |
 | 1.3 | Repeat at three board positions, keep the best | A |
 | 1.4 | Tune thresholds per upstream `TUNING.md` | A |
-| 1.5 | Automation: motion off 10 min → lights off, plus manual override | A |
+| 1.5 | **Deferred, 2026-08-18** — Automation: motion off 10 min → lights off, plus manual override | A |
 
-**Gate 1:** written down, not remembered —
+**Gate 1 — movement capture, the part that matters right now:**
 
 - score while walking across the link ≥ 3× score in an empty room
 - no false "occupied" during a 2-hour empty-room soak
-- lights turn off within 30 s of the timeout expiring
+
+**Deferred until task 1.5 is picked back up:** lights turn off within 30 s of
+the timeout expiring.
 
 **Artifact:** `docs/measurements/M1-placement.md` with the three positions tried
 and their score ranges.
@@ -304,3 +307,4 @@ Stated so scope cannot creep in quietly:
 | 2026-08-18 | First plan is locked to one ESP32-WROOM-32 DevKit with CH9102X | This is the hardware already owned. C6/S3 boards, meshes, and pose work would create a different project and are explicitly deferred. |
 | 2026-08-18 | Added `firmware-radar/`: a second, independent implementation on Espressif's official `esp-radar` (Apache-2.0), inspired by reading WaveSight's actual code | WaveSight's `waveform_wander` (documented for stationary presence) is never read in its `radar_cb()` — confirms the same gap as ESPectre's PR #112 in a second, unrelated codebase. Kept as a parallel track, not a replacement, per the user's explicit choice of "full standalone app" over a design-doc-only or comparison-signal-only option. |
 | 2026-08-18 | `firmware-radar` compile-verified in Docker (`espressif/idf:v5.4`, target `esp32`) before committing | 998/998 build steps succeeded, zero errors/warnings in the four new source files, produced a valid 838,880-byte image. `presence_fusion.c`'s host-side tests remain unrun (no C compiler available outside the ESP-IDF cross-toolchain) — compiling is not evidence the logic is correct, only that it builds. |
+| 2026-08-18 | Deferred the lights automation (M1's last task) and the whole stationary-presence/breathing track (M2 onward); current priority is plain movement capture only | User's explicit request — validate movement detection end to end before adding any complexity on top. Nothing built so far is discarded; M1's placement/tuning tasks and Gate 1's movement-vs-empty score gap remain exactly as scoped, only the automation step and everything after it are put on hold. |
