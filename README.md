@@ -25,6 +25,11 @@ ported to MicroPython:
 This has **not yet been validated on real CSI data or on-device MicroPython**.
 The next evidence gate is a labeled recording from the actual room and ESP32.
 
+Toolchain is prepared locally (Python 3.12, micro-espectre environment, esptool,
+verified firmware image) but the board has never been powered on. Gate 0 in
+[docs/PLAN.md](docs/PLAN.md) is the current blocker and it needs physical access
+to the hardware.
+
 ## Quick start
 
 Requires Python 3.11+ for local tests. The detector itself uses only the Python
@@ -63,6 +68,15 @@ docs/            Design rationale, two-language plans, and Windows build guide
 data/            Local labeled CSI sessions (ignored by Git)
 firmware/        Local upstream firmware downloads (ignored by Git)
 ```
+
+## Documentation
+
+| Document | What it covers |
+|---|---|
+| [docs/PLAN.md](docs/PLAN.md) | Milestones M0-M5, gate criteria, evidence standards, risks, decision log |
+| [docs/BUILD-GUIDE.md](docs/BUILD-GUIDE.md) | 17 numbered Windows steps from unboxing to first recording |
+| [docs/TWO-PERSON-SPLIT.md](docs/TWO-PERSON-SPLIT.md) | Roles, per-stage deliverables, and the one hard dependency |
+| [docs/measurements/](docs/measurements/) | Evidence artifacts produced at each gate |
 
 ## Hardware path
 
