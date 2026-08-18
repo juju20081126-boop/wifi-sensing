@@ -5,10 +5,11 @@ WiFi Channel State Information (CSI) amplitude to detect the breathing-sized
 periodic motion of a person sitting still, complementing a conventional motion
 detector for room-light automation.
 
-The project grew from reviewing [RuView](https://github.com/ruvnet/RuView) and
-[ESPectre](https://github.com/francescopace/espectre). The immediate goal is not
-pose estimation or people counting: it is preventing automatic lights from
-turning off while someone is present but stationary.
+The project grew from reviewing [RuView](https://github.com/ruvnet/RuView),
+[ESPectre](https://github.com/francescopace/espectre), and
+[WaveSight](https://github.com/ErfanDL/WaveSight). The immediate goal is not pose
+estimation or people counting: it is preventing automatic lights from turning
+off while someone is present but stationary.
 
 ## Current status
 
@@ -20,7 +21,9 @@ ported to MicroPython:
 - rejection of smooth, non-periodic AGC drift
 - timestamp-aware resampling for irregular CSI packet arrival
 - continuous confidence score for later precision/recall tuning
-- 9 synthetic-signal tests passing
+- stateful motion-or-breathing occupancy fusion with K-of-N evidence,
+  hysteresis, and a configurable motion hold
+- 15 synthetic and state-machine tests passing
 
 This has **not yet been validated on real CSI data or on-device MicroPython**.
 The next evidence gate is a labeled recording from the actual room and ESP32.
@@ -59,10 +62,28 @@ print(result.bpm, result.score, result.valid)
 Use real timestamps whenever available. Assuming a nominal packet rate scales
 the reported BPM by the ratio between the nominal and actual rates.
 
+Fuse that score with an existing motion detector:
+
+```python
+from src.presence.tracker import PresenceTracker
+
+presence = PresenceTracker(motion_hold_s=180.0)
+state = presence.update(
+    timestamp_s=packet_time,
+    motion_detected=motion_state,
+    breathing_score=result.score,
+)
+print(state.occupied, state.reason)
+```
+
+Breathing evidence must win a K-of-N vote, while motion marks occupancy
+immediately and remains held for the configured timeout.
+
 ## Repository layout
 
 ```text
 src/breathing/   Pure-Python filter, resampler, estimator, and public detector
+src/presence/    Stateful motion/breathing fusion and occupancy hold
 tests/           Synthetic-signal regression tests
 docs/            Design rationale, two-language plans, and Windows build guide
 data/            Local labeled CSI sessions (ignored by Git)
@@ -77,6 +98,7 @@ firmware/        Local upstream firmware downloads (ignored by Git)
 | [docs/BUILD-GUIDE.md](docs/BUILD-GUIDE.md) | 17 numbered Windows steps from unboxing to first recording |
 | [docs/TWO-PERSON-SPLIT.md](docs/TWO-PERSON-SPLIT.md) | Roles, per-stage deliverables, and the one hard dependency |
 | [docs/measurements/](docs/measurements/) | Evidence artifacts produced at each gate |
+| [docs/WAVESIGHT-REVIEW.md](docs/WAVESIGHT-REVIEW.md) | WaveSight comparison, selected design pattern, and licensing boundary |
 
 ## Hardware path
 
@@ -109,3 +131,8 @@ Motion and breathing are complementary. Fuse their decisions as an OR at the
 state level: motion catches someone entering; breathing helps retain occupancy
 when that person becomes still. Keep the breathing score continuous so its
 threshold can be selected from real precision/recall data instead of guesswork.
+
+`PresenceTracker` now implements this design. Its temporal evidence window and
+motion hold were inspired by WaveSight's device architecture, but were written
+from scratch because WaveSight's root application has no license file. See the
+[design review](docs/WAVESIGHT-REVIEW.md) for the comparison and boundary.
