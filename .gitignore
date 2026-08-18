@@ -25,6 +25,7 @@ firmware/*.bin
 # ESP-IDF build output and machine-generated config (regenerate with
 # `idf.py set-target esp32 && idf.py build`; sdkconfig.defaults is committed).
 firmware-radar/build/
+firmware-radar/build-*/
 firmware-radar/sdkconfig
 firmware-radar/sdkconfig.old
 firmware-radar/managed_components/

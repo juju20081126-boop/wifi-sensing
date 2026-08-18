@@ -21,11 +21,18 @@ approaches target the same problem from this project's promise in
 | Claim | Status |
 |---|---|
 | `esp_radar.h` API used correctly (function signatures, struct fields) | Verified — read directly from the header, not from memory |
-| `esp-radar` targets the original ESP32 | Verified — `components/espressif__esp-radar/lib/esp32/libesp-radar.a` exists |
-| CSI-enable sdkconfig options | Verified — read from WaveSight's own checked-in, working `sdkconfig` |
-| **The project compiles** | **Verified.** Built clean in `espressif/idf:v5.4` (Docker) for `esp32`, all 998 build steps, zero errors or warnings in `presence_fusion.c`, `radar_app.c`, `web_server.c`, or `app_main.c`. Produced `presence-radar.bin`, 838,880 bytes, 20% of the app partition free. Reproduce with the command in "Building" below. |
-| It runs correctly on real hardware | **Not verified. Never flashed. No board has run this code.** Compiling is not the same as working — see PLAN.md's evidence discipline. |
-| `presence_fusion.c`'s logic is correct | Host-side tests exist in `main/test_presence_fusion.c` and have **not been run** — no plain C compiler was available for that, only the ESP-IDF cross-toolchain used for the firmware build above. Run them before trusting the fusion logic. |
+| `esp-radar` targets both owned boards | Verified — `components/espressif__esp-radar/lib/{esp32,esp32s3}/libesp-radar.a` both present, both linked successfully |
+| CSI-enable sdkconfig options | Verified — read from WaveSight's own checked-in, working `sdkconfig` (that config was for an `esp32s3` build, confirming these options work on Board 2 as well) |
+| **The project compiles for Board 1 (esp32)** | **Verified.** Built clean in `espressif/idf:v5.4` (Docker), all 998 build steps, zero errors or warnings. Produced `presence-radar.bin`, 838,880 bytes, 20% of the app partition free. |
+| **The project compiles for Board 2 (esp32s3)** | **Verified**, separately, 2026-08-18. 1,037 build steps, zero errors or warnings. Produced `presence-radar.bin`, 835,760 bytes, 20% free. Bootloader lands at flash offset `0x0` (S3 layout) versus `0x1000` for Board 1 (classic ESP32 layout) — the two images are not interchangeable. Reproduce with the S3 command in "Building" below. |
+| It runs correctly on real hardware | **Not verified on either board. Never flashed.** Compiling is not the same as working — see PLAN.md's evidence discipline. |
+| `presence_fusion.c`'s logic is correct | Host-side tests exist in `main/test_presence_fusion.c` and have **not been run** — no plain C compiler was available for that, only the ESP-IDF cross-toolchain used for the firmware builds above. Run them before trusting the fusion logic. |
+
+**Board 2 is not in active use.** Both targets compile, but the project's
+current priority (per the root README and PLAN.md) is movement capture on
+Board 1 only. The `esp32s3` target exists and is verified so the option is
+ready the moment it's actually prioritized — not as an invitation to start
+using it now.
 
 ## The gap this fixes
 
@@ -113,7 +120,9 @@ Two different pieces, two different rules — same discipline as documented in
 
 Requires ESP-IDF v5.4 (matching the version WaveSight's own README
 specifies and the version this was checked against). If you do not have
-ESP-IDF installed natively, use Docker from the repository root:
+ESP-IDF installed natively, use Docker from the repository root.
+
+**Board 1 (esp32, the active target):**
 
 ```bash
 MSYS_NO_PATHCONV=1 docker run --rm \
@@ -122,10 +131,30 @@ MSYS_NO_PATHCONV=1 docker run --rm \
   bash -c "idf.py set-target esp32 && idf.py build"
 ```
 
+**Board 2 (esp32s3, compile-verified but not in active use)** — uses a
+self-contained overlay rather than layering on the Board 1 defaults, since
+both files set `CONFIG_IDF_TARGET` and would otherwise conflict:
+
+```bash
+MSYS_NO_PATHCONV=1 docker run --rm \
+  -v "$(pwd)/firmware-radar:/project" -w /project \
+  espressif/idf:v5.4 \
+  bash -c "idf.py -B build-s3 -D SDKCONFIG_DEFAULTS=sdkconfig.defaults.esp32s3 set-target esp32s3 && idf.py -B build-s3 build"
+```
+
 ## Flashing (not yet attempted)
+
+Board 1 is the active target and does not need `-B`:
 
 ```bash
 idf.py -p COM3 flash monitor
+```
+
+Board 2, if that's ever the target being flashed, needs its build directory
+specified so the `esp32s3` image goes out rather than the `esp32` one:
+
+```bash
+idf.py -B build-s3 -p COM3 flash monitor
 ```
 
 Then open `http://<device-ip>/` once it joins WiFi (check the serial monitor

@@ -19,22 +19,24 @@ automation and the stationary-presence/breathing work above are real and
 documented, but deliberately on hold until movement capture itself is
 working end to end — see [docs/TODO.md](docs/TODO.md) Stage 3.
 
-## Active hardware scope — first plan
+## Hardware scope
 
-This repository's active plan is for **one specific board only**:
+Two boards are now owned, but the active plan still runs on one at a time:
 
-| Part | Exact scope |
-|---|---|
-| Sensing module | Original ESP32-WROOM-32 DevKit |
-| USB bridge | CH9102X |
-| Connector | Micro-USB |
-| WiFi | 2.4 GHz 802.11 b/g/n |
-| Quantity | One board |
+| | Board 1 (primary, active) | Board 2 |
+|---|---|---|
+| Module | Original ESP32-WROOM-32 DevKit | ESP32-S3 |
+| USB bridge | CH9102X | (board-specific) |
+| WiFi | 2.4 GHz 802.11 b/g/n | 2.4 GHz 802.11 b/g/n |
+| Role right now | Movement capture (current priority, above) | Owned, deliberately idle |
 
-CH9102X is the USB-to-serial bridge used for flashing and serial communication;
-the ESP32-WROOM-32 is the module that performs WiFi CSI sensing. ESP32-C6,
-ESP32-S3, second-board layouts, meshes, and pose estimation are not part of this
-first plan.
+Board 2 unlocks things Board 1 physically cannot do: two-antenna coverage
+(Layout B), and it's a real target for [RuView](https://github.com/ruvnet/RuView)
+— which never supported the original ESP32 (verified by grepping its build
+scripts; see [docs/METHODOLOGY.md §1](docs/METHODOLOGY.md#1-verify-claims-against-the-primary-source-never-a-summary)).
+None of that is being pursued yet. Sequencing still applies: prove movement
+capture on Board 1 first. See [docs/PLAN.md §0](docs/PLAN.md) for the full
+reasoning and decision log.
 
 ## Current status
 

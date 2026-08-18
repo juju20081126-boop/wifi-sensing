@@ -1,0 +1,13 @@
+# ESP32-S3 target overlay. Use with:
+#   idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.defaults.esp32s3" set-target esp32s3 && idf.py build
+#
+# Deliberately does NOT layer on top of sdkconfig.defaults (which hard-codes
+# CONFIG_IDF_TARGET="esp32") -- passing both would fight over the target.
+# This file is self-contained instead.
+#
+# Same two CSI-enable symbol names as the primary esp32 config. Verified
+# present together in WaveSight's own checked-in, working sdkconfig for an
+# esp32s3 build (read directly, not assumed).
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_ESP_WIFI_CSI_ENABLED=y
+CONFIG_ESP32_WIFI_CSI_ENABLED=y

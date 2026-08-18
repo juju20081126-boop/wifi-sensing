@@ -1,4 +1,4 @@
-# To-do list — ESP32-WROOM-32 DevKit (CH9102X, one board)
+# To-do list — ESP32-WROOM-32 DevKit (primary) + ESP32-S3 (second board)
 
 A single checklist for the whole project, stage by stage. Each stage lists
 exactly what you need before you start it and exactly what to do. Check boxes
@@ -13,11 +13,12 @@ as you go — this file is meant to be edited, not just read.
 This file is the short version of all three. When a step needs more detail than
 fits here, it links to the document that has it.
 
-> **Fixed scope:** Every checkbox in this file is for the one board already
-> purchased: an original ESP32-WROOM-32 DevKit with a CH9102X USB-to-serial
-> bridge and Micro-USB connector. CH9102X creates the COM port; it is not the
-> sensing processor. Do not substitute an ESP32-C6/S3 or add a second board to
-> this checklist.
+> **Scope, updated 2026-08-18:** Every checkbox in this file targets Board 1,
+> the original ESP32-WROOM-32 DevKit with a CH9102X USB-to-serial bridge and
+> Micro-USB connector. CH9102X creates the COM port; it is not the sensing
+> processor. An ESP32-S3 (Board 2) is now owned too, but current priority is
+> unchanged: get movement capture working on Board 1 before touching Board 2.
+> Do not substitute Board 2 into any checkbox below.
 
 ---
 
@@ -27,7 +28,8 @@ Buy or gather these before Stage 1. Nothing below Stage 4 is needed yet.
 
 | Item | Needed for | Cost | Have it? |
 |---|---|---|---|
-| ESP32-WROOM-32 DevKit with CH9102X bridge | Everything | Bought (NT$265) | [x] |
+| ESP32-WROOM-32 DevKit with CH9102X bridge (Board 1) | Stages 1-8, active | Bought (NT$265) | [x] |
+| ESP32-S3 (Board 2) | Layout B / later stages, not active yet | Bought | [x] |
 | Micro-USB **data** cable (not charge-only) | Flashing | Check what you have first | [ ] |
 | 2.4 GHz WiFi network | Provisioning the board | Existing router | [ ] |
 | A Windows PC with Chrome | Flashing, everything | This machine | [x] |
@@ -35,8 +37,8 @@ Buy or gather these before Stage 1. Nothing below Stage 4 is needed yet.
 | Docker Desktop | Home Assistant | Installed, daemon needs starting | [ ] |
 | Python 3.12 | The research track | Installed via `uv` | [x] |
 
-This is intentionally a **one-board materials list**. Additional boards are a
-separate future scope decision, not a later checkbox in this plan.
+Both boards are now owned. Every stage below still targets **Board 1 only**
+until movement capture is validated — see PLAN.md §0 for why.
 
 ---
 
@@ -239,5 +241,6 @@ and 7–8 are Person B's (software, evaluation, the PR). The only stage that
 blocks the other person is Stage 6 → Stage 7 — everything else can run in
 parallel.
 
-Both people share the same WROOM-32. Schedule hardware sessions rather than
-adding a second board to this plan.
+A second board (ESP32-S3) is now owned, which could remove the scheduling
+conflict entirely — but per the current priority, Board 1 movement capture
+comes first. Don't reach for Board 2 just because it's sitting there.
