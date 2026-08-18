@@ -5,6 +5,8 @@ WiFi Channel State Information (CSI) amplitude to detect the breathing-sized
 periodic motion of a person sitting still, complementing a conventional motion
 detector for room-light automation.
 
+<img width="2000" height="2000" alt="A (1)" src="https://github.com/user-attachments/assets/a825438c-6797-41e5-bf8b-dd20404700d1" />
+
 The project grew from reviewing [RuView](https://github.com/ruvnet/RuView),
 [ESPectre](https://github.com/francescopace/espectre), and
 [WaveSight](https://github.com/ErfanDL/WaveSight). The end goal is not pose
