@@ -94,7 +94,8 @@ firmware/        Local upstream firmware downloads (ignored by Git)
 
 | Document | What it covers |
 |---|---|
-| [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | **Start here.** How the project works: verification discipline, TDD case studies, evidence standards, licensing rules |
+| [docs/TODO.md](docs/TODO.md) | **Checklist.** Every stage, what materials it needs, and what to do — check boxes as you go |
+| [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | **Read second.** How the project works: verification discipline, TDD case studies, evidence standards, licensing rules |
 | [docs/PLAN.md](docs/PLAN.md) | Milestones M0-M5, gate criteria, evidence standards, risks, decision log |
 | [docs/BUILD-GUIDE.md](docs/BUILD-GUIDE.md) | 17 numbered Windows steps from unboxing to first recording |
 | [docs/TWO-PERSON-SPLIT.md](docs/TWO-PERSON-SPLIT.md) | Roles, per-stage deliverables, and the one hard dependency |
