@@ -247,8 +247,6 @@ Non-negotiable, because they are how the last attempt failed.
 
 ## 6. Two-person split
 
-Full detail in [TWO-PERSON-SPLIT.md](TWO-PERSON-SPLIT.md).
-
 - **Person A — hardware and data.** M0, M1, M2 recording, M3 collection.
 - **Person B — code and evaluation.** M2 analysis, M4, M5.
 

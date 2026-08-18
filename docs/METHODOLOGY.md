@@ -185,8 +185,8 @@ to slip the actual deliverable.
 
 ## 8. Two people split by dependency, not by seniority
 
-The two-person plan ([docs/TWO-PERSON-SPLIT.md](TWO-PERSON-SPLIT.md)) is
-organized around the one real bottleneck in the whole project: Person B's
+The two-person division of labor is organized around the one real
+bottleneck in the whole project: Person B's
 evaluation code cannot be *measured* against real conditions until Person A
 has produced a labeled dataset. Everything before that point runs in
 parallel — Person B builds and unit-tests the detector against synthetic
@@ -206,4 +206,4 @@ person is idle waiting on the other before week four.
 | Evidence-first evaluation | Section 4, "Evidence standards," verbatim |
 | Physical validation gates | Gate 2 explicitly cannot fail the project, only redirect it |
 | Explicit scope | Section 7, "Explicit non-goals" |
-| Dependency-based division of labor | Section 6, and the full detail in TWO-PERSON-SPLIT.md |
+| Dependency-based division of labor | PLAN.md Section 6 |

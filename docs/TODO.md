@@ -221,6 +221,6 @@ GPLv3, so this code inherits that license once contributed.
 Stages 1–3 and 6 are Person A's (hardware, placement, recording). Stages 4–5
 and 7–8 are Person B's (software, evaluation, the PR). The only stage that
 blocks the other person is Stage 6 → Stage 7 — everything else can run in
-parallel. Full breakdown: [TWO-PERSON-SPLIT.md](TWO-PERSON-SPLIT.md).
+parallel.
 
 Buy the second board once Stage 3 is confirmed working, not before.
