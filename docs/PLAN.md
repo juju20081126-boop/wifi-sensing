@@ -1,6 +1,9 @@
 # Project plan
 
-Detailed, gated plan for the WiFi CSI stationary-presence sensor.
+Detailed, gated plan for the WiFi CSI stationary-presence sensor. Read
+[METHODOLOGY.md](METHODOLOGY.md) alongside this document: that file explains
+*how* the project works (verification discipline, TDD, evidence standards);
+this file is the *schedule* those habits produce.
 
 Last updated 2026-08-18. Every "verified" claim below has evidence recorded
 against it; every unverified claim says so.
@@ -25,10 +28,13 @@ See §7.
 | Item | Evidence |
 |---|---|
 | Breathing detector implemented | `src/breathing/`, 4 modules, pure Python |
-| 9 tests passing | `python -m pytest -q` |
+| Motion+breathing fusion implemented | `src/presence/tracker.py` — K-of-N breathing evidence, motion-hold timeout, hysteresis; written from scratch after reviewing WaveSight's patterns (`docs/WAVESIGHT-REVIEW.md`) |
+| 15 tests passing | `python -m pytest -q` |
 | Rejects AGC-style drift | `test_slow_gain_drift_does_not_look_like_breathing` |
 | Handles wrong nominal packet rate | `test_uses_real_timestamps_when_packet_rate_differs_from_nominal` |
 | Finds breathing at half noise amplitude | `test_finds_breathing_buried_in_noise` |
+| Fusion holds occupancy through a motion gap | `test_motion_is_held_before_room_becomes_empty` |
+| Fusion requires K-of-N breathing votes, not one sample | `test_k_of_n_breathing_evidence_can_hold_occupancy_without_motion` |
 | Firmware targets this chip | Downloaded image is 0xFF-padded to 0x1000 with `0xE9` there — classic ESP32 layout, not S3/C3 |
 | `me flash` accepts our chip | `--chip {esp32,c3,s3,c5,c6}` |
 | Toolchain ready | Python 3.12.13, all 18 `requirements.txt` packages, esptool 5.2.0 |
@@ -170,7 +176,7 @@ firmware_version, notes
 | 4.2 | Verify it runs unmodified under MicroPython on-device | B |
 | 4.3 | Sweep the score threshold, plot precision/recall | B |
 | 4.4 | Evaluate **only on windows where the motion detector reports idle** | B |
-| 4.5 | Compare motion-only vs motion-OR-breathing | B |
+| 4.5 | Compare motion-only vs motion-OR-breathing using `src/presence/tracker.py` | B |
 | 4.6 | Report per-session, per-day, per-subject breakdowns | B |
 | 4.7 | Document the failure cases honestly | B |
 
@@ -200,7 +206,7 @@ Only after Gate 4 passes.
 
 | # | Task | Owner |
 |---|---|---|
-| 5.1 | Check ESPectre forks and open PRs for existing breathing work | B |
+| 5.1 | Check ESPectre forks and open PRs for existing breathing work (WaveSight already reviewed, see docs/WAVESIGHT-REVIEW.md — re-check for new activity before M5) | B |
 | 5.2 | Port the detector into `micro-espectre/src/` — **Python only, no C++** | B |
 | 5.3 | Register through `detector_interface.py` as a real user-facing option | B |
 | 5.4 | Add tests matching upstream conventions | B |
@@ -272,3 +278,5 @@ Stated so scope cannot creep in quietly:
 | 2026-08-17 | Pure Python, no numpy | Must run unmodified under MicroPython |
 | 2026-08-18 | Detector owns the filter | A test proved raw samples reaching autocorrelation directly produce a wrong answer; easy-to-misuse was the defect |
 | 2026-08-18 | Repository stays private for now | Prototype unvalidated on real CSI |
+| 2026-08-18 | Reviewed WaveSight for device-integration patterns, wrote `PresenceTracker` from scratch | WaveSight's own "someone" output is a motion-hold timeout, not stationary detection — confirms this project's gap is still open; no source copied since WaveSight's application code has no license file |
+| 2026-08-18 | Fusion uses K-of-N evidence plus hysteresis, not a single-sample OR | A single strong breathing sample is weak evidence; requiring repeated votes with separate on/off thresholds avoids flicker |
